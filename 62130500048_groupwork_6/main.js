@@ -68,7 +68,8 @@ const app = {
             gender: null,
             age: null,
             phone: null,
-            errors: null
+            errors: null,
+            img: './images/gift.jpg'
         }
     },
     methods: {
@@ -88,6 +89,14 @@ const app = {
             } else {
                 alert("Your profile is updated successfully.")
             }
+        },
+        upload(e) {
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            var reader = new FileReader();
+            reader.onload = (e) => {
+                this.img = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     },
     computed: {

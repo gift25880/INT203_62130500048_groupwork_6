@@ -45,7 +45,14 @@
                         Your information will be shown <br>
                         in your profile page like this.</h2>
                         <br>
-                    <img src="./images/gift.jpg" class="w-4/12 rounded-full mx-auto mt-4">
+                    <img :src="img" class="w-40 h-40 rounded-full mx-auto mt-4 object-cover">
+                    <div class="relative z-10 -mt-10 ml-28">
+                        <label for="file-input">
+                            <i class="fas fa-camera text-xl text-white cursor-pointer p-2 bg-gray-500 rounded-full bg-opacity-50 hover:bg-opacity-75 hover:bg-gray-400"></i> 
+                        </label>
+                        <input id="file-input" type="file" @change="upload" class="hidden">
+                    </div>
+                    
                     <h3 class="text-white text-2xl mt-4 font-bold"> {{ fullName }}</h3>
                     <p class="text-white">{{ email }}</p>
                     <p class="text-white"> {{ phone }}</p>
