@@ -14,6 +14,10 @@
     <!-- Using Tailwind via CDN -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a7ef51f3aa.js" crossorigin="anonymous"></script>
 
@@ -22,68 +26,124 @@
     <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
     <!-- Vue CDN -->
     <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        #submit {
+            background-color: #545871;
+        }
+        #submit:hover {
+            filter: brightness(75%);
+        }
+    </style>
 </head>
 
-<body>
+<body style="font-family: 'Quicksand', sans-serif; color: #545871;">
     <div id="app">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-2">
-                <div class="text-center">
-                    <img src="./images/gift.jpg" class="w-4/12 rounded-full mx-auto">
+        <div class="grid grid-cols-3 h-screen">
+            <div class="table">
+                <div class="text-center table-cell align-middle h-screen" style="background-color: #545871;">
+                    <h2 class="text-xl font-medium text-white">
+                        Your information will be shown <br>
+                        in your profile page like this.</h2>
+                        <br>
+                    <img src="./images/gift.jpg" class="w-4/12 rounded-full mx-auto mt-4">
+                    <h3 class="text-white text-2xl mt-4 font-bold"> {{ fullName }}</h3>
+                    <p class="text-white">{{ email }}</p>
+                    <p class="text-white"> {{ phone }}</p>
+                    <span class="text-white" v-if="gender"> {{ gender }}</span>
+                    <span class="text-white" v-if="gender&&age>0">&nbsp;|&nbsp;</span>
+                    <span class="text-white" v-if="age>0">{{ "Age: " + age}}</span>
                 </div>
-                <form @submit.prevent="checkForm">
-                    <div>
-                        <h1 class="text-3xl font-bold">Profile</h1>
-                        <br>
-                        <div>
-                            <label for="userName">Username</label>
-                            <input type="text" id="userName" v-model="userName" name="userName" class="border">
-                        </div>
-                        <div>
-                            <label for="email">Email</label>
-                            <input type="text" id="email" v-model="email" name="email" class="border">
-                        </div>
-                        
-                        <div>
-                            <label for="password">Password</label>
-                            <input type="password" id="password" v-model="password" name="password" class="border">
-                        </div>
-                        <div>
-                            <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" v-model="fullName" name="fullName" class="border">
-                        </div>
-                        <div>
-                            <label for="gender">Gender</label>
-                            <input type="radio" id="male" v-model="gender" name="gender" value="M">
-                            <label for="male">Male</label>
-                            <input type="radio" id="female" v-model="gender" name="gender" value="F">
-                            <label for="female">Female</label>
-                        </div>
-                        <div>
-                            <label for="age">Age</label>
-                            <input type="number" id="age" v-model="age" name="age" class="border">
-                        </div>
-                        <div>
-                            <label for="phone">Phone</label>
-                            <input type="text" id="phone" v-model="phone" name="phone" class="border">
-                        </div>
-                        <br>
-                        <p v-if="errors" class="text-red-500">
-                            <b>Please correct the following field:</b>
-                            <ul>
-                               <li v-for="error in errors" class="text-red-500">{{ error }}</li> 
-                            </ul>
-                        </p>
-                        <br>
-                        <div>
-                            <input type="submit" value="submit">
-                        </div>
-                    </div>
-                </form>
-                
             </div>
+            <div class="table col-span-2">
+                <div style="background-color: #f7eceb;" class="font-medium table-cell align-middle h-screen px-40">
+                    <h1 class="text-5xl font-extrabold">Update Profile</h1>
+                    <div class="text-xl">
+                        <form @submit.prevent="checkForm">
+                            <br>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label for="firstName">First Name</label>
+                                    <br>
+                                    <input type="text" id="firstName" v-model="firstName" name="firstName"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.firstName }}</i>
+                                </div>
+                                <div>
+                                    <label for="lastName">Last Name</label>
+                                    <br>
+                                    <input type="text" id="lastName" v-model="lastName" name="lastName"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.lastName }}</i>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label for="userName">Username</label>
+                                    <br>
+                                    <input type="text" id="userName" v-model="userName" name="userName"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.userName }}</i>
+                                </div>
+                                <div>
+                                    <label for="password">Password</label>
+                                    <br>
+                                    <input type="password" id="password" v-model="password" name="password"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.password }}</i>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label for="email">Email</label>
+                                    <br>
+                                    <input type="text" id="email" v-model="email" name="email"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.email }}</i>
+                                </div>
+                                <div>
+                                    <label for="gender">Gender</label>
+                                    <br>
+                                    <div class="h-10 items-center flex text-lg">
+                                        <input type="radio" id="male" v-model="gender" name="gender" value="Male">
+                                        <label for="male" class="pl-3">Male</label>
+                                        <input type="radio" id="female" v-model="gender" name="gender" value="Female"
+                                            class="ml-6">
+                                        <label for="female" class="pl-3">Female</label>
+                                    </div>
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.gender }}</i>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label for="phone">Phone</label>
+                                    <br>
+                                    <input type="text" id="phone" v-model="phone" name="phone"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.phone }}</i>
+                                </div>
+                                <div>
+                                    <label for="age">Age</label>
+                                    <br>
+                                    <input type="number" id="age" v-model="age" name="age"
+                                        class="border w-full rounded mt-2 h-10 text-lg">
+                                    <i class="text-sm text-red-500" v-if="errors"> {{ errors.age }}</i>
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <input id="submit" type="submit" value="submit" class="text-white rounded-full px-8 py-2 cursor-pointer">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        
+
+
     </div>
 
     <!-- my main.js -->

@@ -13,7 +13,10 @@ const constraints = {
             within: ['admin','root','username']
         }
     },
-    fullName: {
+    firstName: {
+        presence: true
+    },
+    lastName: {
         presence: true
     },
     email: {
@@ -58,7 +61,8 @@ const app = {
     data() {
         return {
             userName: null,
-            fullName: null,
+            firstName: null,
+            lastName: null,
             email: null,
             password: null,
             gender: null,
@@ -70,7 +74,8 @@ const app = {
     methods: {
         checkForm() {
             this.errors = validate({
-                fullName: this.fullName,
+                firstName: this.firstName,
+                lastName: this.lastName,
                 userName: this.userName,
                 email: this.email,
                 password: this.password,
@@ -78,9 +83,25 @@ const app = {
                 age: this.age,
                 phone: this.phone
             },constraints);
-            if(!this.errors){
-                alert("Registered successfully.")
+            if(this.errors){
+                console.log(this.errors);
+            } else {
+                alert("Your profile is updated successfully.")
             }
+        }
+    },
+    computed: {
+        fullName() {
+            if (this.firstName && this.lastName) {
+                return this.firstName+" "+this.lastName;
+            } else if (this.firstName) {
+                return this.firstName;
+            } else if ( this.lastName){
+                return this.lastName;
+            } else {
+                return "";
+            }
+            
         }
     }
 }
